@@ -4,6 +4,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+from shot import Shot
 
 def main():
     pygame.init()
@@ -19,11 +20,13 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     #adding classes to groups to iterate on them inside the game loop
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = updatable
+    Shot.containers = (shots, updatable, drawable)
 
     #Player positionning on the screen
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -45,6 +48,10 @@ def main():
             if obj.collision(player) == True:
                 print("Game Over !")
                 sys.exit()
+        
+        for shot in shots:
+            shot.update(dt)
+            shot.draw(screen)
 
         #This fills the screen with a color, black in this case
         screen.fill("black")
