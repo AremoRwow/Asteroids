@@ -1,5 +1,6 @@
 import pygame
 import sys
+
 from constants import *
 from player import *
 from asteroid import *
@@ -7,7 +8,12 @@ from asteroidfield import *
 from shot import Shot
 
 def main():
+    #Initialise pygame
     pygame.init()
+    #Initialise fonts to display text
+    pygame.font.init()
+    font = pygame.font.Font("expressway rg.otf", 20)
+
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
@@ -32,7 +38,8 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
 
-    dt = 0    
+    dt = 0
+    score = 0
 
 
     #Game loop starts here, the for loop is here to kill upon closing game window
@@ -52,6 +59,7 @@ def main():
                 if bullet.collision(obj) == True:
                     bullet.kill()
                     obj.split()
+                    score += ASTEROID_REWARD
         
         for shot in shots:
             shot.update(dt)
@@ -62,8 +70,11 @@ def main():
 
         for obj in drawable:
             obj.draw(screen)
-            
 
+        #This creates a text and reders it using a string and a color    
+        text_score = font.render(f"SCORE: {score}", True, "white")    
+        text_width = text_score.get_width()                         #Now we get the width of the text to make sure we place it in the center of the screen
+        screen.blit(text_score, ((SCREEN_WIDTH - text_width) / 2, 10)) #And we use the width to center the text, as well as a y value to get it at the top of the screen
 
         #This line updates the game window
         pygame.display.flip()
