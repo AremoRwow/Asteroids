@@ -15,7 +15,7 @@ def main():
     font = pygame.font.Font("expressway rg.otf", 20)
 
     #We define a background image we want to use instead of having a black window
-    background_image = pygame.image.load("1-2.jpg")
+    background_image = pygame.image.load("images/1-2.jpg")
     background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT)) #This scales the image to the screen resolution, because 1-2.jpg has a different resolution
 
     print("Starting asteroids!")
